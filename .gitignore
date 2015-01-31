@@ -1,0 +1,4 @@
+StackLibraryTest.o
+StackLibraryTestRunner.c
+StackLibraryTestRunner.exe
+expr_assert.h
