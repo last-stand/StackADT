@@ -115,3 +115,90 @@ void test_top_should_point_to_the_latest_pushed_element_on_stack_for_STRUCTURE()
 	assertEqual(((Employee*)(*stack.top)->data)->id, 3);
 	assertEqual(strcmp(((Employee*)(*stack.top)->data)->name, c.name),0);
 }
+
+void test_pop_should_return_popped_element_from_top_of_stack_for_INTEGER(){
+	int a = 10, b = 20, c = 30;
+	stack = createStack();
+	assertEqual(push(stack, &a),1);
+	assertEqual(push(stack, &b),2);
+	assertEqual(push(stack, &c),3);
+	assertEqual(*(int*)pop(stack),30);
+	assertEqual(*(int*)pop(stack),20);
+	assertEqual(*(int*)pop(stack),10);
+}
+
+void test_pop_should_pop_last_element_from_stack_and_decreases_no_of_elements_for_INTEGER(){
+	int a = 10, b = 20, c = 30;
+	stack = createStack();
+	assertEqual(push(stack, &a),1);
+	assertEqual(push(stack, &b),2);
+	assertEqual(push(stack, &c),3);
+	assertEqual(*(int*)pop(stack),30);
+	assertEqual(stack.list->count,2);
+	assertEqual(*(int*)pop(stack),20);
+	assertEqual(stack.list->count,1);
+	assertEqual(*(int*)pop(stack),10);
+	assertEqual(stack.list->count,0);
+}
+
+void test_after_pop_top_should_point_to_element_before_the_popped_element_for_CHAR(){
+	char a = 'a', b = 'b', c = 'c';
+	stack = createStack();
+	assertEqual(push(stack, &a),1);
+	assertEqual(push(stack, &b),2);
+	assertEqual(push(stack, &c),3);
+	assertEqual(*(char*)pop(stack),'c');
+	assert((*stack.top)->data == &b);
+	assertEqual(*(char*)pop(stack),'b');
+	assert((*stack.top)->data == &a);
+}
+
+void test_after_popping_all_elements_of_stack_stackTop_should_be_NULL_for_CHAR(){
+	char a = 'a', b = 'b';
+	stack = createStack();
+	assertEqual(push(stack, &a),1);
+	assertEqual(push(stack, &b),2);
+	assertEqual(*(char*)pop(stack),'b');
+	assert((*stack.top)->data == &a);
+	assertEqual(*(char*)pop(stack),'a');
+	assert(*stack.top == NULL);
+}
+
+void test_after_popping_all_elements_of_stack_stackTop_should_be_NULL_for_STRING(){
+	char a[] = "Bharat ka rahne waala hoon", b[] = "Mere desh ki dharti";
+	stack = createStack();
+	assertEqual(push(stack, a),1);
+	assertEqual(push(stack, b),2);
+	assertEqual(strcmp((char*)pop(stack),b),0);
+	assert((*stack.top)->data == a);
+	assertEqual(strcmp((char*)pop(stack),a),0);
+	assert(*stack.top == NULL);
+}
+
+void test_after_popping_all_elements_of_stack_stackTop_should_be_NULL_for_STRUCTURE(){
+	Employee a = {1,"Jai"}, b = {2,"Ram"};
+	Employee *result;
+	stack = createStack();
+	assertEqual(push(stack, &a), 1);
+	assertEqual(push(stack, &b), 2);
+	assert((*stack.top)->data == &b);
+	result = pop(stack);
+	assertEqual(strcmp(result->name,b.name),0);
+	assert((*stack.top)->data == &a);
+	result = pop(stack);
+	assertEqual(strcmp(result->name, a.name),0);
+	assert(*stack.top == NULL);
+}
+
+void test_stack_gives_data_15_at_index_2(){
+	Stack stack = createStack();
+	int data[] = {12,13,15,16},count,index,i;
+
+	for(i=0;i<4;i++){
+		count = push(stack,&data[i]);
+	}
+	index = indexOf(*stack.list,&data[2]);
+	assertEqual(count,4);
+	assertEqual(index,2);
+	assertEqual(*(int*)(*stack.top)->data,data[3]);
+};

@@ -14,3 +14,7 @@ int push(Stack stack, void *data){
 	if(stack.list->count == 0) return -1;
 	return stack.list->count;
 };
+
+void * pop(Stack stack){
+	return deleteElementAt(stack.list, stack.list->count-1);
+};
