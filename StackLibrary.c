@@ -1,8 +1,10 @@
 #include "StackLibrary.h"
-#include "expr_assert.h"
+#include <stdio.h>
 
 Stack createStack(void){
-	Stack stack = createList();
-	stack.count = -1;
+	Stack stack;
+	LinkedList list = createList();
+	stack.list = &list;
+	stack.top = NULL;
 	return stack;
 };
